@@ -1,10 +1,7 @@
 package com.dickie.mwangai.ui.theme.screens.Dashboard
 
-import android.util.StatsLog
-import androidx.compose.animation.core.StartOffset
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-//import androidx.compose.foundation.layout.FlowRowScopeInstance.weight
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,40 +26,45 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.NotificationCompat.Action
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dickie.mwangai.data.DashboardViewModel
 import com.dickie.mwangai.model.DashboardStat
 import com.dickie.mwangai.model.QuickAction
-import com.dickie.mwangai.ui.theme.screens.login.Login_screen2
+import kotlin.collections.forEach
+
 
 @Composable
-fun Dashboard_Screen(navController: NavController,viewModel: DashboardViewModel=
-                         androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun Dashboardscreen (navController: NavHostController,
+                     viewModel: DashboardViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+
     val stats by viewModel.stats.collectAsState()
     val action by viewModel.quickAction.collectAsState()
 
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
+    Surface (
+        modifier = Modifier
+            .fillMaxSize(),
         color = MaterialTheme.colorScheme.background
-
-    ) {
-        Column(
+    ){
+        Column (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-        ) {
+        ){
             Text(
-                text = "Welcome Back, Dickson ",
+                text = "Welcome Back, Daniel",
                 style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
             )
-            Spacer(modifier = Modifier.height(20.dp))
+
+            Spacer(modifier = Modifier .height(20.dp))
+
             StatsSection(stats)
 
-            Spacer(modifier = Modifier.height(20.dp))
-            QuickActions(action=action)
+            Spacer(modifier = Modifier .height(20.dp))
+
+            QuickActions (actions = action)
+
+
         }
     }
 }
@@ -71,32 +73,28 @@ fun Dashboard_Screen(navController: NavController,viewModel: DashboardViewModel=
 fun StatsSection(stats: List<DashboardStat>) {
     Row (
         horizontalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.fillMaxSize()
-
-    ){
+        modifier = Modifier .fillMaxWidth()
+    ) {
         stats.forEach {
             StatCard(it)
         }
     }
-
 }
 
 @Composable
 fun StatCard(stat: DashboardStat) {
-    Card(
+    Card (
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
-//            .weight(1f)
             .height(120.dp),
         colors = CardDefaults.cardColors(containerColor = stat.background)
-
-    ) {
-        Column(
+    ){
+        Column (
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween
-        ) {
+        ){
             Icon(stat.icon, contentDescription = stat.tittle, tint = Color.Black)
             Column {
                 Text(text = stat.tittle, fontSize = 14.sp, color = Color.DarkGray)
@@ -105,43 +103,55 @@ fun StatCard(stat: DashboardStat) {
         }
     }
 }
-    @Composable
-    fun QuickActions(action: List<QuickAction>) {
-        Text(
-            text = "Quick Actions",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            action.forEach {
-                ActionItem(it)
-            }
-        }
-    }
 
-    @Composable
-    fun ActionItem(action: QuickAction) {
-        Card(
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(action.icon, contentDescription = action.tittle, tint = Color.Black)
-                Spacer(modifier = Modifier.width(16.dp))
-                Text(text = action.tittle, fontSize = 16.sp)
-            }
-        }
-
-    }
-
-@Preview(showBackground=true)
 @Composable
-fun PreviewDashboard () {
-    Dashboard_Screen(rememberNavController())
+fun QuickActions(actions: List<QuickAction>) {
+    Text(
+        text = "Quick Actions",
+        style = MaterialTheme.typography.titleMedium,
+        modifier = Modifier .padding(bottom = 8.dp)
+    )
+    Column (
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ){
+        actions.forEach {
+            ActionItem(it)
+        }
+    }
+}
+
+@Composable
+fun ActionItem(action: QuickAction) {
+    Card (
+        shape = RoundedCornerShape(12.dp),
+        modifier = Modifier
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
+    ){
+        Row (
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(16.dp)
+        ){
+            Icon(
+                action.icon,
+                contentDescription = action.tittle,
+                tint = Color.Black
+            )
+
+            Spacer(modifier = Modifier
+                .width(16.dp))
+            Text(
+                text = action.tittle,
+                fontSize = 16.sp,
+                color = Color.Black)
+        }
+    }
 
 }
 
+@Preview (showBackground = true)
+@Composable
+fun Previewdash() {
+    Dashboardscreen(rememberNavController())
+}

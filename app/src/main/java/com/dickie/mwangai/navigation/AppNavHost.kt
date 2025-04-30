@@ -33,7 +33,7 @@ fun AppNavHost(modifier: Modifier = Modifier,
            SplashScreen(navController)
        }
         composable(route_DashBOARD) {
-            Dashboard_Screen()
+            Dashboard_Screen(navController)
         }
         }
     }

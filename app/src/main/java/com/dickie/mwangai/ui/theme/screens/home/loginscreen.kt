@@ -1,6 +1,6 @@
 package com.dickie.mwangai.ui.theme.screens.home
 
-import android.graphics.drawable.Drawable
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
